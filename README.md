@@ -12,24 +12,24 @@
 
 ## 核心功能
 
-| 能力 | 说明 |
-|------|------|
-| **PDF 简历上传** | `multipart/form-data` 上传，校验扩展名与 MIME，限制单文件大小（可配置） |
-| **PDF 文本解析** | PyMuPDF 提取文本，清洗空白并截断长度，避免超大请求 |
-| **AI 结构化简历分析** | 大模型严格 JSON 输出，Pydantic 校验与补全；失败回退演示数据 |
-| **JD 岗位匹配分析** | 可选 `jd_text`；有密钥时优先大模型语义匹配，失败或无密钥时用本地关键词规则 |
-| **Mock / fallback 降级** | 无 `AI_API_KEY` 时简历与匹配均可演示；请求失败、非 JSON、弱结果时逐级降级 |
-| **前端可视化展示** | Element Plus：上传区、JD 文本域、简历卡片、岗位匹配模块、状态标签（离线演示 / 大模型失败等） |
+| 能力                     | 说明                                                                                         |
+| ------------------------ | -------------------------------------------------------------------------------------------- |
+| **PDF 简历上传**         | `multipart/form-data` 上传，校验扩展名与 MIME，限制单文件大小（可配置）                      |
+| **PDF 文本解析**         | PyMuPDF 提取文本，清洗空白并截断长度，避免超大请求                                           |
+| **AI 结构化简历分析**    | 大模型严格 JSON 输出，Pydantic 校验与补全；失败回退演示数据                                  |
+| **JD 岗位匹配分析**      | 可选 `jd_text`；有密钥时优先大模型语义匹配，失败或无密钥时用本地关键词规则                   |
+| **Mock / fallback 降级** | 无 `AI_API_KEY` 时简历与匹配均可演示；请求失败、非 JSON、弱结果时逐级降级                    |
+| **前端可视化展示**       | Element Plus：上传区、JD 文本域、简历卡片、岗位匹配模块、状态标签（离线演示 / 大模型失败等） |
 
 ---
 
 ## 技术栈
 
-| 端 | 技术 |
-|----|------|
-| **前端** | Vue 3、Vite、Element Plus、Axios |
-| **后端** | FastAPI、Uvicorn、Pydantic、PyMuPDF（`fitz`）、python-dotenv、requests |
-| **AI** | DeepSeek / OpenAI 等 **OpenAI-compatible** Chat Completions（`/v1/chat/completions`） |
+| 端       | 技术                                                                                  |
+| -------- | ------------------------------------------------------------------------------------- |
+| **前端** | Vue 3、Vite、Element Plus、Axios                                                      |
+| **后端** | FastAPI、Uvicorn、Pydantic、PyMuPDF（`fitz`）、python-dotenv、requests                |
+| **AI**   | DeepSeek / OpenAI 等 **OpenAI-compatible** Chat Completions（`/v1/chat/completions`） |
 
 ---
 
@@ -84,11 +84,11 @@ PyMuPDF 解析 PDF → 文本清洗与长度限制
 
 ## API 文档
 
-详细字段、示例见 **[docs/API.md](./docs/API.md)**。交互式文档：启动后端后访问 **http://127.0.0.1:8000/docs**。
+详细字段、示例见 **[docs/API.md](./docs/API.md)**。交互式文档：启动后端后访问 **<http://127.0.0.1:8000/docs**。>
 
-| 方法 | 路径 | 说明 |
-|------|------|------|
-| `GET` | `/api/health` | 健康检查 |
+| 方法   | 路径                  | 说明                     |
+| ------ | --------------------- | ------------------------ |
+| `GET`  | `/api/health`         | 健康检查                 |
 | `POST` | `/api/resume/analyze` | 上传 PDF，可选 `jd_text` |
 
 **统一成功响应：**
@@ -97,7 +97,7 @@ PyMuPDF 解析 PDF → 文本清洗与长度限制
 {
   "code": 0,
   "message": "success",
-  "data": { }
+  "data": {}
 }
 ```
 
@@ -122,13 +122,13 @@ PyMuPDF 解析 PDF → 文本清洗与长度限制
 
 在 `backend` 目录复制 `.env.example` 为 `.env` 后配置：
 
-| 变量 | 说明 |
-|------|------|
-| `AI_API_KEY` | 大模型 API Key；**留空**则简历与（无额外逻辑时）匹配走本地演示/规则 |
-| `AI_BASE_URL` | 兼容接口根 URL，需含 `/v1` 路径前缀（如 `https://api.deepseek.com/v1`） |
-| `AI_MODEL` | 模型名，如 `deepseek-chat`、`gpt-4o-mini` |
-| `MAX_RESUME_TEXT_LENGTH` | PDF 提取文本最大字符数，默认 `15000` |
-| `MAX_UPLOAD_FILE_MB` | 单文件上传上限（MB），默认 `10` |
+| 变量                     | 说明                                                                    |
+| ------------------------ | ----------------------------------------------------------------------- |
+| `AI_API_KEY`             | 大模型 API Key；**留空**则简历与（无额外逻辑时）匹配走本地演示/规则     |
+| `AI_BASE_URL`            | 兼容接口根 URL，需含 `/v1` 路径前缀（如 `https://api.deepseek.com/v1`） |
+| `AI_MODEL`               | 模型名，如 `deepseek-chat`、`gpt-4o-mini`                               |
+| `MAX_RESUME_TEXT_LENGTH` | PDF 提取文本最大字符数，默认 `15000`                                    |
+| `MAX_UPLOAD_FILE_MB`     | 单文件上传上限（MB），默认 `10`                                         |
 
 **注意：** 勿将真实密钥提交到 Git；`.env` 已在 `.gitignore` 中忽略。
 
@@ -156,6 +156,14 @@ npm run dev
 浏览器打开控制台输出的本地地址（通常为 `http://127.0.0.1:5173`）。开发环境下 `/api` 由 Vite 代理到 `http://127.0.0.1:8000`。
 
 生产构建前端见 `frontend/README.md`（可设置 `VITE_API_BASE`）。
+
+---
+
+## 页面预览
+
+![首页](docs/images/home.png)
+
+![分析结果](docs/images/result.png)
 
 ---
 
